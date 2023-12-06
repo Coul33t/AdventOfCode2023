@@ -127,10 +127,6 @@ def check_second_number(data, begin_x_first_number, end_x_first_number, y_row, g
                 if not check_if_has_been_done(new_pair, already_done_pairs):
                     gear_val = new_pair[0] * new_pair[1]
                     already_done_pairs.append(new_pair)
-                    print(f"New pair: {new_pair}")
-
-                else:
-                    print(f"Pair {new_pair} has already been done")
                 
     
     return gear_val
@@ -154,10 +150,13 @@ def get_gears(data: list) -> list:
                 is_digit = False
                 gear_coords = search_for_gear(data, begin_x, x, y)
                 if gear_coords.x != -1 and gear_coords.y != -1:
-                    print(f"{row[begin_x:x]} has gear")
+                    print(f"{row[begin_x:x]} has gear", end='')
                     gear_val = check_second_number(data, begin_x, x, y, gear_coords, already_done_set)
                     if gear_val != -1:
+                        print(f' ({x}/{y})')
                         sum_of_gears += gear_val
+                    else:
+                        print()
                     
                 
     return sum_of_gears
@@ -167,7 +166,7 @@ def sum_of_list(lst: list) -> int:
     return sum(lst)
 
 def main():
-    data = read_input('data.txt')
+    data = read_input('data_test.txt')
     #lst_of_numbers = get_list_of_valid_numbers(data)
     #print(f"Sum of valid numbers: {sum_of_list(lst_of_numbers)}")
 
