@@ -95,8 +95,47 @@ def pre_rank(hands: list) -> None:
             current_rank += 1
 
 
+def get_subgroups(hands: list) -> list:
+    hands_subgroups = [[] for x in range(max([x.rank for x in hands]))]
+
+    for hand in hands:
+        hands_subgroups[hand.rank - 1].append(hand)
+
+    return hands_subgroups
+
+
+def order_subgroup(grp: list, last_rank: int) -> None:
+    cards_order = CARDS_ORDER[::-1]
+    current_rank = last_rank + 1
+
+    for card in cards_order:
+        idxs = [i for i, hand in enumerate(grp) if hand.cards[0] == card]
+
+        if not idxs:
+            continue
+
+        if len(idxs) == 1: 
+            grp[idxs[0]].rank = current_rank
+            current_rank += 1
+
+        else:
+            #do lol
+            pass
+
 def rank_hands(hands: list) -> None:
     pre_rank(hands)
+    hands_subgroups = get_subgroups(hands)
+
+    last_subgroup_last_idx = 0
+
+    for hand_subgroup in hands_subgroups:
+        if len(hand_subgroup) == 1:
+            last_subgroup_last_idx = hand_subgroup[-1].rank
+            continue
+    
+        else:
+            order_subgroup(hand_subgroup, last_subgroup_last_idx)
+
 
     
 
